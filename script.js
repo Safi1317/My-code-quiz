@@ -2,9 +2,9 @@ const startButton = document.getElementById("start-btn");
 const questionEl = document.getElementById("questionBox");
 const questionTextEl = document.getElementById("questions");
 const choice1 = document.querySelector("#choice1");
-const choice2 = document.querySelector(".choice2");
-const choice3 = document.querySelector(".choice3");
-const choice4 = document.querySelector(".choice4");
+const choice2 = document.querySelector("#choice2");
+const choice3 = document.querySelector("#choice3");
+const choice4 = document.querySelector("#choice4");
 
 let questionIndex = 0;
 
@@ -66,9 +66,10 @@ function getNextQuestion() {
   button.addEventListener("click", Answer);
   if (questionIndex < questions.length) {
     questionIndex++;
-    showQuestion();
+    showQuestion([questionIndex]);
   }
 }
+
 // Sets interval in variable
 // const timeEl = getElementById("countdown");
 // let seconds = 10;
