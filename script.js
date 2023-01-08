@@ -1,10 +1,15 @@
 const startButton = document.getElementById("start-btn");
 const questionEl = document.getElementById("questionBox");
 const questionTextEl = document.getElementById("questions");
+const nextbutton = document.getElementById("Next");
 const choice1 = document.querySelector("#choice1");
 const choice2 = document.querySelector("#choice2");
 const choice3 = document.querySelector("#choice3");
 const choice4 = document.querySelector("#choice4");
+const choices = document
+  .getElementsByClassName("choices")[0]
+  .querySelectorAll("button");
+console.log(choices);
 
 let questionIndex = 0;
 
@@ -12,7 +17,7 @@ const questions = [
   {
     question: "What is the only food that can never go bad?",
     choices: ["Honey", "oranges", "butter", "lemon"],
-    Answer: 1,
+    Answer: 0,
   },
   {
     question: "Where were chocolate chip cookies invented?",
@@ -52,24 +57,46 @@ function showQuestion() {
   questionTextEl.textContent = questions[questionIndex].question;
   console.log("4");
   console.log("choice1" + questions[questionIndex].choices[0]);
-  choice1.innerHTML = questions[questionIndex].choices[0];
+  choice1.textContent = questions[questionIndex].choices[0];
   console.log(questions[questionIndex].choices[0]);
   choice2.textContent = questions[questionIndex].choices[1];
   choice3.textContent = questions[questionIndex].choices[2];
   choice4.textContent = questions[questionIndex].choices[3];
-
-  questionIndex++;
 }
 //  get next question from question array onclick of correct answer
+
+choices.forEach((choicebutton) => {
+  choicebutton.addEventListener("click", selectanswer);
+});
+// compare Answers to correct Answer
+// if correct answer is selected go to next question
+// if wrong answer selected minus score/timer by 1
+function selectanswer(event) {
+  console.log(event.target.innerText);
+  if (Answer === event.target.innerText) {
+    console.log("correct");
+    getNextQuestion();
+    // timeleft=timeleft+1;
+  } else {
+    console.log("wrong");
+    // timeleft=timeleft-1;
+  }
+}
+nextbutton.addEventListener("click", () => {
+  questionIndex++;
+  getNextQuestion();
+});
 function getNextQuestion() {
   questionEl.classList.remove("hide");
   button.addEventListener("click", Answer);
   if (questionIndex < questions.length) {
     questionIndex++;
     showQuestion([questionIndex]);
+  } else {
+    startButton.innerText = "Restart";
+    startButton.classList.remove("hide");
   }
 }
-
 // Sets interval in variable
 // const timeEl = getElementById("countdown");
 // let seconds = 10;
