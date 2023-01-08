@@ -17,7 +17,7 @@ const questions = [
   {
     question: "What is the only food that can never go bad?",
     choices: ["Honey", "oranges", "butter", "lemon"],
-    Answer: 0,
+    Answer: "oranges",
   },
   {
     question: "Where were chocolate chip cookies invented?",
@@ -55,7 +55,7 @@ function showQuestion() {
   questionEl.classList.remove("hide");
 
   questionTextEl.textContent = questions[questionIndex].question;
-  console.log("4");
+  console.log([questionIndex]);
   console.log("choice1" + questions[questionIndex].choices[0]);
   choice1.textContent = questions[questionIndex].choices[0];
   console.log(questions[questionIndex].choices[0]);
@@ -70,11 +70,11 @@ choices.forEach((choicebutton) => {
 });
 // compare Answers to correct Answer
 // if correct answer is selected go to next question
-// if wrong answer selected minus score/timer by 1
+// if wrong answer selected minus timer by 1
 function selectanswer(event) {
   console.log(event.target.innerText);
-  if (Answer === event.target.innerText) {
-    console.log("correct");
+  if (questions[questionIndex].Answer === event.target.innerText) {
+    console.log(questions[questionIndex].Answer);
     getNextQuestion();
     // timeleft=timeleft+1;
   } else {
@@ -84,16 +84,21 @@ function selectanswer(event) {
 }
 nextbutton.addEventListener("click", () => {
   questionIndex++;
-  getNextQuestion();
+  // getNextQuestion();
 });
 function getNextQuestion() {
   questionEl.classList.remove("hide");
-  button.addEventListener("click", Answer);
+  // button.addEventListener("click", Answer);
   if (questionIndex < questions.length) {
-    questionIndex++;
-    showQuestion([questionIndex]);
+    console.log("test1");
+    // questionIndex++;
+    console.log("test2");
+    showQuestion();
+    console.log("tes3");
   } else {
+    console.log("test4");
     startButton.innerText = "Restart";
+    console.log("test5");
     startButton.classList.remove("hide");
   }
 }
@@ -118,5 +123,5 @@ function getNextQuestion() {
 //   }
 // }, 1000);
 
-//  add a my initials and my score saver
+//  add a my initials and store my score
 //add a game over function
