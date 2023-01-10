@@ -116,7 +116,10 @@ submitbutton.addEventListener("click", userinput);
 
 function userinput() {
   initials = document.getElementById("initials");
-  localStorage.setItem("initials", initials.value);
+  if (timeleft > highscore) {
+    localStorage.setItem("initials", initials.value);
+    highscoreel.textContent = initials.value + timeleft;
+  }
 }
 
 // quiz score
@@ -129,9 +132,15 @@ function score() {
   localStorage.setItem("score", finalscore.textContent);
   clearInterval(timerid);
   finalscore;
+
+  if (timeleft > highscore) {
+    highscoreel.textContent = timeleft;
+  } else {
+    highscoreel.textContent = highscoreintials + highscore;
+  }
 }
 function gameover() {
   clearInterval(timerid);
-  timer.innerHTML = "Finished";
+  timer.innerHTML = "Finished!";
   score();
 }
