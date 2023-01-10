@@ -1,8 +1,9 @@
 const startButton = document.getElementById("start-btn");
 const questionEl = document.getElementById("questionBox");
-const iniatials = document.getElementById("initials");
+var initials = document.getElementById("initials");
 const questionTextEl = document.getElementById("questions");
 const finalscore = document.getElementById("finalscore");
+const highscoreel = document.getElementById("highscore");
 const Rules = document.querySelector(".Rules");
 const totalscore = document.querySelector("#score-page");
 const timer = document.getElementById("countdown");
@@ -19,6 +20,9 @@ console.log(choices);
 
 let questionIndex = 0;
 let timerid;
+
+var highscore = localStorage.getItem("score");
+var highscoreintials = localStorage.getItem("initials");
 
 const questions = [
   {
@@ -109,14 +113,10 @@ function quiztimer() {
   }
 }
 submitbutton.addEventListener("click", userinput);
+
 function userinput() {
-  finalscore = input.value;
-  localStorage.setitem("score", input.value);
-  finalscore = localStorage.getItem("score");
-  console.log(localStorage.getItem("score"));
-  initials = input.value;
-  localStorage.setitem("initials", input.value);
-  initials = localStorage.getItem("initials");
+  initials = document.getElementById("initials");
+  localStorage.setItem("initials", initials.value);
 }
 
 // quiz score
@@ -126,8 +126,9 @@ function score() {
   nextbutton.setAttribute("class", "hide");
   totalscore.removeAttribute("class");
   finalscore.textContent = timeleft;
+  localStorage.setItem("score", finalscore.textContent);
   clearInterval(timerid);
-  output.innerhtml += initials + finalscore;
+  finalscore;
 }
 function gameover() {
   clearInterval(timerid);
