@@ -1,11 +1,13 @@
 const startButton = document.getElementById("start-btn");
 const questionEl = document.getElementById("questionBox");
+const iniatials = document.getElementById("initials");
 const questionTextEl = document.getElementById("questions");
 const finalscore = document.getElementById("finalscore");
 const Rules = document.querySelector(".Rules");
 const totalscore = document.querySelector("#score-page");
 const timer = document.getElementById("countdown");
 const nextbutton = document.getElementById("Next");
+const submitbutton = document.getElementById("submit");
 const choice1 = document.querySelector("#choice1");
 const choice2 = document.querySelector("#choice2");
 const choice3 = document.querySelector("#choice3");
@@ -100,15 +102,23 @@ function quiztimer() {
   timer.textContent = timeleft;
   timeleft--;
   if (timeleft <= 0) {
+    timeleft = 0;
     clearInterval(timerid);
     // alert("gameover");
     gameover();
   }
 }
-// function userinput() {
-//   localStorage.setitem("userinput", input.value);}
+submitbutton.addEventListener("click", userinput);
+function userinput() {
+  finalscore = input.value;
+  localStorage.setitem("score", input.value);
+  finalscore = localStorage.getItem("score");
+  console.log(localStorage.getItem("score"));
+  initials = input.value;
+  localStorage.setitem("initials", input.value);
+  initials = localStorage.getItem("initials");
+}
 
-var stats = localStorage.getItem("userinput");
 // quiz score
 function score() {
   questionEl.setAttribute("class", "hide");
@@ -117,16 +127,10 @@ function score() {
   totalscore.removeAttribute("class");
   finalscore.textContent = timeleft;
   clearInterval(timerid);
-  // output.innerhtml += stats + finalscore;
+  output.innerhtml += initials + finalscore;
 }
 function gameover() {
   clearInterval(timerid);
   timer.innerHTML = "Finished";
   score();
 }
-
-// userinput
-// hide nextbutton
-// make submit button work
-//  fix negative timer
-//  make comment work
