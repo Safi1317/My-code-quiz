@@ -9,11 +9,6 @@
   </head>
   <body>
     <div class="container">
-      <div class="score">
-        <span id="user-score">0</span>
-        <span> / </span>
-        <span id="total-score">0</span>
-      </div>
       <div id="countdown"></div>
       <div class="Rules">
         <h2>Food Quiz</h2>
@@ -34,7 +29,12 @@
       <div class="controls">
         <button id="start-btn" class="button">startQuiz</button>
         <button id="Next" class="button">Next</button>
-        <button class="button">Previous</button>
+      </div>
+      <div class="hide" id="score-page">
+        <h2>totalscore</h2>
+        <p>your finalscore is: <span id="finalscore"></span></p>
+        <label> Enter initials</label>
+        <input id="initials" type="text" />
         <button class="button">Submit</button>
       </div>
     </div>

@@ -1,6 +1,10 @@
 const startButton = document.getElementById("start-btn");
 const questionEl = document.getElementById("questionBox");
 const questionTextEl = document.getElementById("questions");
+const finalscore = document.getElementById("finalscore");
+const Rules = document.querySelector(".Rules");
+const totalscore = document.querySelector("#score-page");
+const timer = document.getElementById("countdown");
 const nextbutton = document.getElementById("Next");
 const choice1 = document.querySelector("#choice1");
 const choice2 = document.querySelector("#choice2");
@@ -12,53 +16,49 @@ const choices = document
 console.log(choices);
 
 let questionIndex = 0;
+let timerid;
 
 const questions = [
   {
     question: "What is the only food that can never go bad?",
     choices: ["Honey", "oranges", "butter", "lemon"],
-    Answer: "oranges",
+    Answer: "Honey",
   },
   {
     question: "Where were chocolate chip cookies invented?",
-    choices: ["Honey", "oranges", "butter", "lemon"],
-    Answer: 2,
+    choices: ["USA", "UK", "GHANA", "FRANCE"],
+    Answer: "USA",
   },
   {
     question: "Where were French fries first invented?",
-    choices: ["Honey", "oranges", "butter", "lemon"],
-    Answer: 4,
+    choices: ["FRANCE", "KENYA", "GREEN", "lemon"],
+    Answer: "GREEN",
   },
   {
     question: "Where were chocolate chip cookies invented",
-    choices: ["Honey", "oranges", "butter", "lemon"],
-    Answer: 1,
+    choices: ["BLUE", "GREEN", "YELOW", "RED"],
+    Answer: "GREEN",
   },
   {
     question:
       "Mozzarella cheese is traditionally made from the milk of what animal?",
-    choices: ["Honey", "oranges", "butter", "lemon"],
-    Answer: 3,
+    choices: ["RED", "UK", "butter", "UK"],
+    Answer: "butter",
   },
 ];
 startButton.addEventListener("click", startGame);
+//  start game
 function startGame() {
-  score = 0;
-  console.log("start game");
   startButton.classList.add("hide");
+  Rules.style.display = "none";
   showQuestion();
-  // questionClassEl.classList.remove("hide");
-  // getNextQuestion();
+  timerid = setInterval(quiztimer, 1000);
 }
 // set button name to the choices in question array
 function showQuestion() {
   questionEl.classList.remove("hide");
-
   questionTextEl.textContent = questions[questionIndex].question;
-  console.log([questionIndex]);
-  console.log("choice1" + questions[questionIndex].choices[0]);
   choice1.textContent = questions[questionIndex].choices[0];
-  console.log(questions[questionIndex].choices[0]);
   choice2.textContent = questions[questionIndex].choices[1];
   choice3.textContent = questions[questionIndex].choices[2];
   choice4.textContent = questions[questionIndex].choices[3];
@@ -72,56 +72,61 @@ choices.forEach((choicebutton) => {
 // if correct answer is selected go to next question
 // if wrong answer selected minus timer by 1
 function selectanswer(event) {
-  console.log(event.target.innerText);
   if (questions[questionIndex].Answer === event.target.innerText) {
-    console.log(questions[questionIndex].Answer);
+    // comment.textContent = "Correct!";
+
+    // // hide nextbutton
     getNextQuestion();
     // timeleft=timeleft+1;
   } else {
-    console.log("wrong");
-    // timeleft=timeleft-1;
+    // comment.textContent = "Wrong!";
+    // choicebutton.append(comment);
+    timeleft -= 10;
   }
 }
-nextbutton.addEventListener("click", () => {
-  questionIndex++;
-  // getNextQuestion();
-});
+nextbutton.addEventListener("click", getNextQuestion);
 function getNextQuestion() {
+  questionIndex++;
   questionEl.classList.remove("hide");
-  // button.addEventListener("click", Answer);
   if (questionIndex < questions.length) {
-    console.log("test1");
-    // questionIndex++;
-    console.log("test2");
     showQuestion();
-    console.log("tes3");
   } else {
-    console.log("test4");
-    startButton.innerText = "Restart";
-    console.log("test5");
-    startButton.classList.remove("hide");
+    score();
   }
 }
-// Sets interval in variable
-// const timeEl = getElementById("countdown");
-// let seconds = 10;
-// let quiztimer = setInterval(function () {
-//   if (secondsLeft <= 0) {
-//     timeEl.textContent = secondsLeft + " seconds left till end of game.";
-//     // Stops execution of action at set interval
-//     showQuestion();
-//     // clearInterval(quiztimer);
-//   }
-//   // Calls function to create and append image
-//   else {
-//     if (secondsLeft === 0) {
-//       // Stops execution of action at set interval
-//       clearInterval(quiztimer);
-//       // Calls function to create and append image
-//       alert(gameover);
-//     }
-//   }
-// }, 1000);
+// quiz timer
+var timeleft = 50;
+function quiztimer() {
+  timer.textContent = timeleft;
+  timeleft--;
+  if (timeleft <= 0) {
+    clearInterval(timerid);
+    // alert("gameover");
+    gameover();
+  }
+}
+// function userinput() {
+//   localStorage.setitem("userinput", input.value);}
 
-//  add a my initials and store my score
-//add a game over function
+var stats = localStorage.getItem("userinput");
+// quiz score
+function score() {
+  questionEl.setAttribute("class", "hide");
+  timer.setAttribute("class", "hide");
+  nextbutton.setAttribute("class", "hide");
+  totalscore.removeAttribute("class");
+  finalscore.textContent = timeleft;
+  clearInterval(timerid);
+  // output.innerhtml += stats + finalscore;
+}
+function gameover() {
+  clearInterval(timerid);
+  timer.innerHTML = "Finished";
+  score();
+}
+
+// userinput
+// hide nextbutton
+// make submit button work
+//  fix negative timer
+//  make comment work

@@ -17,7 +17,6 @@ body {
 #countdown {
   width: 100px;
   height: 70px;
-  background-color: white;
   display: inline-flex;
   margin: 10px;
   font-size: 30px;
@@ -35,17 +34,19 @@ body {
   padding: 10px;
   margin: 10px;
   font-size: 16px;
-  display: grid;
   background-color: rgb(172, 226, 165);
   border-color: rgb(172, 226, 165);
   box-shadow: 0 12px 16px 0;
   cursor: pointer;
 }
+.choices {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+}
 .hide {
   display: none;
 }
 
-/* .button :hover{
-      color: rgb(109, 129, 109);
-
-   } */
+.choices :hover {
+  color: rgb(109, 129, 109);
+}
