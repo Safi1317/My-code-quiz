@@ -1,13 +1,12 @@
 const startButton = document.getElementById("start-btn");
 const questionEl = document.getElementById("questionBox");
-var initials = document.getElementById("initials");
+const initials = document.getElementById("initials");
 const questionTextEl = document.getElementById("questions");
 const finalscore = document.getElementById("finalscore");
 const highscoreel = document.getElementById("highscore");
 const Rules = document.querySelector(".Rules");
 const totalscore = document.querySelector("#score-page");
 const timer = document.getElementById("countdown");
-const nextbutton = document.getElementById("Next");
 const submitbutton = document.getElementById("submit");
 const choice1 = document.querySelector("#choice1");
 const choice2 = document.querySelector("#choice2");
@@ -21,35 +20,32 @@ console.log(choices);
 let questionIndex = 0;
 let timerid;
 
-var highscore = localStorage.getItem("score");
-var highscoreintials = localStorage.getItem("initials");
-
 const questions = [
   {
     question: "What is the only food that can never go bad?",
-    choices: ["Honey", "oranges", "butter", "lemon"],
+    choices: ["Oranges", "Honey", "Butter", "Lemon"],
     Answer: "Honey",
   },
   {
     question: "Where were chocolate chip cookies invented?",
-    choices: ["USA", "UK", "GHANA", "FRANCE"],
-    Answer: "USA",
+    choices: ["Massachusetts", "Minneapolis", "Ghana", "France"],
+    Answer: "Massachusetts",
   },
   {
     question: "Where were French fries first invented?",
-    choices: ["FRANCE", "KENYA", "GREEN", "lemon"],
-    Answer: "GREEN",
+    choices: ["France", "Kenya", "Green", "Belgium"],
+    Answer: "Belgium",
   },
   {
-    question: "Where were chocolate chip cookies invented",
-    choices: ["BLUE", "GREEN", "YELOW", "RED"],
-    Answer: "GREEN",
+    question: "What is the only fruit with seeds on the outside?",
+    choices: ["Mangoes", "Kiwifruit", "Strawberries", "Gooseberry"],
+    Answer: "Strawberries",
   },
   {
     question:
       "Mozzarella cheese is traditionally made from the milk of what animal?",
-    choices: ["RED", "UK", "butter", "UK"],
-    Answer: "butter",
+    choices: ["Cow", "Buffalo", "Goat", "Camel"],
+    Answer: "Buffalo",
   },
 ];
 startButton.addEventListener("click", startGame);
@@ -69,39 +65,31 @@ function showQuestion() {
   choice3.textContent = questions[questionIndex].choices[2];
   choice4.textContent = questions[questionIndex].choices[3];
 }
-//  get next question from question array onclick of correct answer
-
 choices.forEach((choicebutton) => {
   choicebutton.addEventListener("click", selectanswer);
 });
 // compare Answers to correct Answer
 // if correct answer is selected go to next question
-// if wrong answer selected minus timer by 1
 function selectanswer(event) {
   if (questions[questionIndex].Answer === event.target.innerText) {
-    // comment.textContent = "Correct!";
-
-    // // hide nextbutton
     getNextQuestion();
-    // timeleft=timeleft+1;
   } else {
-    // comment.textContent = "Wrong!";
-    // choicebutton.append(comment);
-    timeleft -= 10;
+    timeleft -= 15;
   }
 }
-nextbutton.addEventListener("click", getNextQuestion);
+//  get next question from question array onclick of correct answer
 function getNextQuestion() {
   questionIndex++;
   questionEl.classList.remove("hide");
   if (questionIndex < questions.length) {
     showQuestion();
   } else {
-    score();
+    gameover();
   }
 }
 // quiz timer
-var timeleft = 50;
+// if wrong answer selected minus timer by 15
+var timeleft = 60;
 function quiztimer() {
   timer.textContent = timeleft;
   timeleft--;
@@ -113,32 +101,29 @@ function quiztimer() {
   }
 }
 submitbutton.addEventListener("click", userinput);
-
 function userinput() {
-  initials = document.getElementById("initials");
-  if (timeleft > highscore) {
-    localStorage.setItem("initials", initials.value);
-    highscoreel.textContent = initials.value + timeleft;
-  }
+  localStorage.setItem("initials", initials.value);
+  let getHighScore = localStorage.getItem("score");
+  document.getElementById("finalInitials").textContent = initials.value;
+  highscoreel.textContent = getHighScore;
 }
 
 // quiz score
 function score() {
   questionEl.setAttribute("class", "hide");
   timer.setAttribute("class", "hide");
-  nextbutton.setAttribute("class", "hide");
   totalscore.removeAttribute("class");
-  finalscore.textContent = timeleft;
-  localStorage.setItem("score", finalscore.textContent);
-  clearInterval(timerid);
-  finalscore;
-
-  if (timeleft > highscore) {
-    highscoreel.textContent = timeleft;
-  } else {
-    highscoreel.textContent = highscoreintials + highscore;
+  let finalUserScore = timeleft;
+  finalscore.textContent = finalUserScore;
+  let currrentHighScore = localStorage.getItem("score");
+  if (finalUserScore > currrentHighScore) {
+    localStorage.setItem("score", finalUserScore);
   }
+  clearInterval(timerid);
+  finalscore.textContent = finalUserScore + initials.value;
+  highscoreel.textContent = currrentHighScore;
 }
+
 function gameover() {
   clearInterval(timerid);
   timer.innerHTML = "Finished!";
